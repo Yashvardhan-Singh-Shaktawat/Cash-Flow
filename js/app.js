@@ -19,6 +19,7 @@ const elements = {
   sidebar: document.getElementById('app-sidebar'),
   sidebarBackdrop: document.getElementById('sidebar-backdrop'),
   mobileNavToggle: document.getElementById('mobile-nav-toggle'),
+  sidebarCloseBtn: document.getElementById('sidebar-close-btn'),
 
   // Forms
   salaryForm: document.getElementById('salary-form'),
@@ -269,6 +270,10 @@ async function initApp() {
 
   if (elements.mobileNavToggle) {
     elements.mobileNavToggle.addEventListener('click', toggleMobileMenu);
+  }
+
+  if (elements.sidebarCloseBtn) {
+    elements.sidebarCloseBtn.addEventListener('click', closeMobileMenu);
   }
 
   if (elements.sidebarBackdrop) {
