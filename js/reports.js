@@ -211,3 +211,4 @@ export function generatePdfReport(state) {
 export default {
   generatePdfReport
 };
+

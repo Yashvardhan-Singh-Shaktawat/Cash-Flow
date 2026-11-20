@@ -173,3 +173,4 @@ class Store {
 // Single singleton instance for the application
 export const store = new Store();
 export default store;
+

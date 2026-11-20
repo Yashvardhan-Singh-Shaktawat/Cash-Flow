@@ -194,3 +194,4 @@ Dashboard Cards & Alerts    Expense DOM List    Chart.js Update
 ## License
 
 Developed under the educational curriculum for **Sprint 02**. MIT License.
+

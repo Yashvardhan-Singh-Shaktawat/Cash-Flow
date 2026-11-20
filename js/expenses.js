@@ -135,3 +135,4 @@ export function renderExpenseList(expenses = [], currency = 'INR', exchangeRates
 export default {
   renderExpenseList
 };
+

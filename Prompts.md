@@ -222,3 +222,4 @@ Test Checklist:
 9. LocalStorage persistence across page reloads.
 10. Responsive layout at 360px, 768px, and 1200px.
 ```
+

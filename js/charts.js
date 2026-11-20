@@ -127,3 +127,4 @@ export default {
   updateChart,
   destroyChart
 };
+
