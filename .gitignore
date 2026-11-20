@@ -19,4 +19,6 @@ Thumbs.db
 dist/
 coverage/
 .temp/
+lighthouse-report.json
+*-report.json
 
