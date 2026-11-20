@@ -19,10 +19,16 @@ export function updateChart(salary = 0, expenses = [], currency = 'INR') {
 
   // Verify Chart.js library is loaded
   if (typeof window.Chart === 'undefined') {
-    console.warn('[Chart] Chart.js CDN is not available yet.');
     if (emptyMsg) {
       emptyMsg.textContent = 'Chart visualization loading...';
       emptyMsg.style.display = 'block';
+    }
+    // Register one-time listener when window loads to retry render
+    if (!window._chartLoadPending) {
+      window._chartLoadPending = true;
+      window.addEventListener('load', () => {
+        updateChart(salary, expenses, currency);
+      }, { once: true });
     }
     return;
   }
