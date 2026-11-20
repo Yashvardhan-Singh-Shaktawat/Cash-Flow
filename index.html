@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Track your salary, manage daily expenses, monitor your remaining balance, and understand your spending with Cash-Flow.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#287A58">
+
+  <!-- Open Graph Metadata -->
+  <meta property="og:title" content="Cash-Flow | Personal Salary & Expense Tracker">
+  <meta property="og:description" content="Track your salary, manage daily expenses, monitor your remaining balance, and understand your spending with Cash-Flow.">
+  <meta property="og:type" content="website">
+
+  <title>Cash-Flow | Personal Salary &amp; Expense Tracker</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Google Fonts: Inter & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Third-party CDN Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+</head>
+<body>
+  <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="app-sidebar" aria-label="Application Sidebar">
+      <div class="sidebar-header">
+        <img src="assets/icons/logo.svg" alt="Cash-Flow Logo" class="brand-logo" width="36" height="36">
+        <div class="brand-info">
+          <span class="brand-name">Cash-Flow</span>
+          <span class="brand-tagline">Personal Finance</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main Navigation">
+        <a href="#dashboard" class="nav-link active" aria-current="page">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="7" height="9" x="3" y="3" rx="1"/>
+            <rect width="7" height="5" x="14" y="3" rx="1"/>
+            <rect width="7" height="9" x="14" y="12" rx="1"/>
+            <rect width="7" height="5" x="3" y="16" rx="1"/>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#expenses-section" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/>
+            <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+            <path d="M12 6v12"/>
+          </svg>
+          <span>Expenses</span>
+        </a>
+        <a href="#chart-section" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+            <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+          </svg>
+          <span>Analytics</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="sprint-badge">Sprint 02 Deliverable</span>
+        <p class="user-snippet">Private &amp; Local Storage Protected</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <!-- Top Sticky Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open Navigation Menu" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="20" y1="12" y2="12"/>
+              <line x1="4" x2="20" y1="6" y2="6"/>
+              <line x1="4" x2="20" y1="18" y2="18"/>
+            </svg>
+          </button>
+          <div class="page-title-group">
+            <h1>Financial Dashboard</h1>
+            <p class="page-subtitle">Salary &amp; Spending Management</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <!-- Currency selector -->
+          <div class="currency-selector-group">
+            <label for="currency-select" class="currency-label">Currency:</label>
+            <select id="currency-select" class="currency-select" aria-label="Select display currency">
+              <option value="INR" selected>INR (₹)</option>
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="GBP">GBP (£)</option>
+            </select>
+            <span id="rate-status" class="currency-rate-status" title="Exchange rate reference status" aria-live="polite"></span>
+          </div>
+
+          <!-- Download Report Button -->
+          <button type="button" id="download-report-btn" class="btn btn-outline btn-sm" title="Download PDF Expense Report">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Export PDF</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard Main -->
+      <main class="dashboard-content" id="dashboard">
+        <!-- Low Balance / Overspending Warning Banner -->
+        <aside id="balance-alert-banner" class="alert-banner" role="alert" aria-live="polite">
+          <div class="alert-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div class="alert-content">
+            <div class="alert-title" id="alert-title">Balance Warning</div>
+            <div class="alert-message" id="alert-message">Your remaining balance is critically low. Review your expenses.</div>
+          </div>
+        </aside>
+
+        <!-- Overview Summary Cards -->
+        <section class="overview-grid" aria-label="Financial Summary Cards">
+          <!-- Total Salary Card -->
+          <article class="card stat-card" id="card-salary">
+            <div class="stat-card-top">
+              <span class="stat-label">Total Salary</span>
+              <div class="stat-icon-wrap primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/>
+                  <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>
+                  <circle cx="18" cy="14" r="1" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-card-bottom">
+              <span class="stat-value" id="display-salary">₹0.00</span>
+              <span class="stat-trend neutral" id="salary-status-badge">Monthly</span>
+            </div>
+          </article>
+
+          <!-- Total Expenses Card -->
+          <article class="card stat-card" id="card-expenses">
+            <div class="stat-card-top">
+              <span class="stat-label">Total Expenses</span>
+              <div class="stat-icon-wrap danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/>
+                  <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+                  <path d="M12 6v12"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-card-bottom">
+              <span class="stat-value" id="display-expenses">₹0.00</span>
+              <span class="stat-trend neutral" id="expenses-count-badge">0 items</span>
+            </div>
+          </article>
+
+          <!-- Remaining Balance Card -->
+          <article class="card stat-card" id="card-balance">
+            <div class="stat-card-top">
+              <span class="stat-label">Remaining Balance</span>
+              <div class="stat-icon-wrap balance">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z"/>
+                  <path d="M2 9v1c0 1.1.9 2 2 2h1"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-card-bottom">
+              <span class="stat-value healthy" id="display-balance">₹0.00</span>
+              <span class="stat-trend positive" id="balance-percentage-badge">100%</span>
+            </div>
+          </article>
+        </section>
+
+        <!-- Two Column Main Grid -->
+        <div class="dashboard-grid">
+          <!-- Left Column: Forms for Salary and Expense Entry -->
+          <div class="dashboard-column">
+            <!-- Salary Section -->
+            <section class="card" aria-labelledby="salary-heading">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <h2 class="card-title" id="salary-heading">Monthly Salary</h2>
+                  <p class="card-subtitle">Set or update your base monthly earnings</p>
+                </div>
+              </div>
+
+              <form id="salary-form" novalidate>
+                <div class="form-group">
+                  <label for="salary-input" class="form-label">
+                    <span>Salary Amount</span>
+                    <span class="form-label-hint">Base Currency (<span class="base-currency-label">INR</span>)</span>
+                  </label>
+                  <div class="input-wrapper">
+                    <span class="input-prefix" id="salary-input-prefix">₹</span>
+                    <input
+                      type="number"
+                      id="salary-input"
+                      name="salary"
+                      class="form-input"
+                      placeholder="e.g. 50000"
+                      min="0"
+                      step="any"
+                      required
+                      aria-describedby="salary-feedback"
+                      autocomplete="off"
+                    >
+                  </div>
+                  <div id="salary-feedback" class="form-feedback" role="alert"></div>
+                </div>
+                <button type="submit" id="salary-submit-btn" class="btn btn-secondary btn-full">
+                  Update Salary
+                </button>
+              </form>
+            </section>
+
+            <!-- Expense Entry Section -->
+            <section class="card" id="expenses-section" aria-labelledby="expense-entry-heading">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <h2 class="card-title" id="expense-entry-heading">Add New Expense</h2>
+                  <p class="card-subtitle">Log everyday spending to track remaining balance</p>
+                </div>
+              </div>
+
+              <form id="expense-form" novalidate>
+                <div class="form-group">
+                  <label for="expense-name" class="form-label">Expense Name</label>
+                  <input
+                    type="text"
+                    id="expense-name"
+                    name="expenseName"
+                    class="form-input"
+                    placeholder="e.g. Groceries, Internet bill, Coffee"
+                    maxlength="60"
+                    required
+                    aria-describedby="expense-name-feedback"
+                    autocomplete="off"
+                  >
+                  <div id="expense-name-feedback" class="form-feedback" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="expense-amount" class="form-label">
+                    <span>Amount</span>
+                    <span class="form-label-hint">Base Currency (<span class="base-currency-label">INR</span>)</span>
+                  </label>
+                  <div class="input-wrapper">
+                    <span class="input-prefix" id="expense-input-prefix">₹</span>
+                    <input
+                      type="number"
+                      id="expense-amount"
+                      name="expenseAmount"
+                      class="form-input"
+                      placeholder="e.g. 1500"
+                      min="0.01"
+                      step="any"
+                      required
+                      aria-describedby="expense-amount-feedback"
+                      autocomplete="off"
+                    >
+                  </div>
+                  <div id="expense-amount-feedback" class="form-feedback" role="alert"></div>
+                </div>
+
+                <button type="submit" id="add-expense-btn" class="btn btn-primary btn-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  <span>Add Expense</span>
+                </button>
+              </form>
+            </section>
+          </div>
+
+          <!-- Right Column: Visualization Chart & Expense History -->
+          <div class="dashboard-column">
+            <!-- Spending Chart Card -->
+            <section class="card chart-container-card" id="chart-section" aria-labelledby="chart-heading">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <h2 class="card-title" id="chart-heading">Income Distribution</h2>
+                  <p class="card-subtitle">Visual breakdown of expenses vs. remaining balance</p>
+                </div>
+              </div>
+
+              <div class="chart-wrapper">
+                <canvas id="spending-chart" aria-label="Income Distribution Chart" role="img"></canvas>
+                <div id="chart-empty-message" class="chart-empty-message">
+                  Enter your monthly salary and add expenses to see your income distribution.
+                </div>
+              </div>
+
+              <div class="chart-legend-custom" aria-hidden="true">
+                <div class="legend-item">
+                  <span class="legend-dot balance"></span>
+                  <span>Remaining Balance</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot expenses"></span>
+                  <span>Total Expenses</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- Expense History List Card -->
+            <section class="card" aria-labelledby="history-heading">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <h2 class="card-title" id="history-heading">Expense History</h2>
+                  <p class="card-subtitle">Itemized log of your recorded expenses</p>
+                </div>
+              </div>
+
+              <div class="expense-list-container" id="expense-list-container">
+                <!-- Empty state shown when no expenses exist -->
+                <div class="empty-state" id="empty-state">
+                  <div class="empty-state-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect width="20" height="14" x="2" y="5" rx="2"/>
+                      <line x1="2" x2="22" y1="10" y2="10"/>
+                    </svg>
+                  </div>
+                  <h3 class="empty-state-title">No expenses yet</h3>
+                  <p class="empty-state-text">Start tracking your spending by adding your first expense above.</p>
+                </div>
+
+                <!-- Expense items list -->
+                <ul class="expense-list" id="expense-list" aria-label="Recorded expenses"></ul>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- JavaScript ES Module Entry -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

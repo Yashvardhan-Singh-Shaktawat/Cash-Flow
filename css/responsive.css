@@ -1,0 +1,139 @@
+/* ==========================================================================
+   CASH-FLOW — Responsive Stylesheet
+   ========================================================================== */
+
+/* Laptop & Small Desktop (<= 1200px) */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Tablet (<= 992px) */
+@media (max-width: 992px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  .overview-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .dashboard-content {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* Mobile & Small Tablet (<= 768px) */
+@media (max-width: 768px) {
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Backdrop for mobile drawer */
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(23, 35, 33, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 90;
+  }
+
+  .sidebar-backdrop.active {
+    display: block;
+  }
+
+  .app-main {
+    margin-left: 0;
+  }
+
+  .mobile-nav-toggle {
+    display: inline-flex;
+  }
+
+  .app-header {
+    padding: 0 16px;
+  }
+
+  .header-actions .btn span {
+    display: none;
+  }
+
+  .header-actions .btn {
+    padding: 0 12px;
+  }
+
+  .dashboard-content {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    min-height: auto;
+    padding: 18px 20px;
+  }
+
+  .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .chart-wrapper {
+    min-height: 240px;
+  }
+
+  .expense-item {
+    padding: 12px;
+  }
+
+  .expense-amount {
+    font-size: 0.95rem;
+  }
+
+  .expense-item-actions {
+    gap: 8px;
+  }
+}
+
+/* Extra Small Mobile (<= 420px) */
+@media (max-width: 420px) {
+  .card {
+    padding: 16px;
+  }
+
+  .page-title-group h1 {
+    font-size: 1.15rem;
+  }
+
+  .currency-selector-group {
+    padding: 2px 6px;
+  }
+
+  .currency-label {
+    display: none;
+  }
+
+  .expense-name {
+    max-width: 130px;
+  }
+}
